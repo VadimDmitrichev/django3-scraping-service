@@ -8,9 +8,24 @@
     </div>
     <div class="card-body">
         <p class="card-text">{{ vacancy.description }}</p>
-        <p>{{ vacancy.city.name }} | {{ vacancy.language.name }} | <small>{{ vacancy.timestamp|date:"d-m-Y" }}</small>  </p>
+        <p>{{ vacancy.city.name }} | {{ vacancy.language.name }} | <small>{{ vacancy.timestamp|date:"d-m-Y" }}</small>
+        </p>
     </div>
 </div>
+{% empty %}
+<h4 class="text-center mx-3 my-3">По запросу ничего не найдено, попробуйте изменить параметры.</h4>
+
 {%  endfor  %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <form method="GET" action="">
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">Найти</button>
+        </form>
+    </div>
+</div>
+
 
 {% endblock %}
