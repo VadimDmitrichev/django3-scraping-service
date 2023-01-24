@@ -7,6 +7,7 @@
         <a href="{{ vacancy.url }}">{{ vacancy.title }}</a>
     </div>
     <div class="card-body">
+        <h4>{{ vacancy.company }} </h4>
         <p class="card-text">{{ vacancy.description }}</p>
         <p>{{ vacancy.city.name }} | {{ vacancy.language.name }} | <small>{{ vacancy.timestamp|date:"d-m-Y" }}</small>
         </p>
