@@ -1,6 +1,11 @@
+import jsonfield
 from django.db import models
 
 from scraping.utils import from_cyrillic_to_eng
+
+
+def default_urls():
+	return {'hh_ru': '', 'habr_career': ''}
 
 
 class City(models.Model):
@@ -53,6 +58,32 @@ class Vacancy(models.Model):
 	class Meta:
 		verbose_name = 'Вакансия'
 		verbose_name_plural = 'Вакансии'
+		ordering = ['-timestamp']
 
 	def __str__(self):
 		return self.title
+
+
+class Error(models.Model):
+	"""Модель для формирования ошибок связанных с парсингом"""
+	timestamp = models.DateField(auto_now_add=True)
+	data = jsonfield.JSONField()
+
+	class Meta:
+		verbose_name = 'Ошибка'
+		verbose_name_plural = 'Ошибки'
+
+	def __str__(self):
+		return self.title
+
+
+class Url(models.Model):
+	"""Модель для формирования уникальных url"""
+	city = models.ForeignKey('City', on_delete=models.CASCADE, verbose_name='Город')
+	language = models.ForeignKey('Language', on_delete=models.CASCADE, verbose_name='Язык программирования')
+	url_data = jsonfield.JSONField(default=default_urls)
+
+	class Meta:
+		unique_together = ('city', 'language')
+		verbose_name= 'Ссылка'
+		verbose_name_plural= 'Ссылки'
