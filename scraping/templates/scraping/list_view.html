@@ -1,0 +1,60 @@
+{% extends 'scraping/base.html' %}
+{% block content %}
+
+<div class="row my-3">
+    <div class="col-md-6 mx-auto border">
+        <form method="GET" action="{% url 'list' %}" class="my-3">
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">Найти</button>
+        </form>
+    </div>
+</div>
+
+{%  for vacancy in vacancy_list  %}
+<div class="card my-3">
+    <div class="card-header">
+        <a href="{{ vacancy.url }}">{{ vacancy.title }}</a>
+    </div>
+    <div class="card-body">
+        <h4>{{ vacancy.company }} </h4>
+        <p class="card-text">{{ vacancy.description }}</p>
+        <p>{{ vacancy.city.name }} | {{ vacancy.language.name }} | <small>{{ vacancy.timestamp|date:"d-m-Y" }}</small>
+        </p>
+    </div>
+</div>
+{% empty %}
+<h4 class="text-center mx-3 my-3">По запросу ничего не найдено, попробуйте изменить параметры.</h4>
+{%  endfor  %}
+
+
+{% if vacancy_list %}
+<div class="row">
+    <div class="col">
+        <ul class="pagination">
+            {% if vacancy_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?city={{ city }}&language={{ language }}&page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+            {% for page in vacancy_list.paginator.page_range %}
+            <li class="page-item {% if page == vacancy_list.number %} active {% endif %}">
+                <a class="page-link" href="?city={{ city }}&language={{ language }}&page={{ page }}">{{ page }}</a>
+            </li>
+            {% endfor %}
+            {% if vacancy_list.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?city={{ city }}&language={{ language }}&page={{ vacancy_list.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
