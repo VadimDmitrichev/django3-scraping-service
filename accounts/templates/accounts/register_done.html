@@ -1,0 +1,13 @@
+{% extends 'scraping/base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 mx-auto my-3">
+        <h5 class="text-center my-2">Пользователь {{ new_user.email }} успешно создан!</h5>
+        <p class="text-center">Спасибо, что решили воспользоваться нашим сервисом </br> Теперь вы можете войти в свой <a
+                href="{% url 'accounts:login' %}">аккаунт</a></p>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'scraping/base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 mx-auto my-3">
+        <h5 class="text-center my-2">Форма входа</h5>
+        <form method="POST" action="">{% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">Войти</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
